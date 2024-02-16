@@ -3,6 +3,7 @@ const UserModel = require("../user/user.model");
 const createError = require("http-errors");
 const { randomInt } = require("crypto");
 const AuthMessage = require("./auth.messages");
+const { signToken } = require("../../utils/token-manager");
 class AuthService {
   constructor() {
     autoBind(this);
@@ -26,6 +27,23 @@ class AuthService {
     user.otp = otp;
     await user.save();
     return user;
+  }
+  async checkOTP(mobile, code) {
+    const user = await UserModel.findOne({ mobile });
+    const now = new Date().getTime();
+    if (!user) throw createError.NotFound(AuthMessage.UserNotFound);
+    if (user.otp.expiresIn < now) {
+      throw createError.Unauthorized(AuthMessage.OtpCodeExpired);
+    }
+    if (user.otp.code !== code) {
+      throw createError.Unauthorized(AuthMessage.OtpCodeIncorrect);
+    }
+    if (!user.verifiedMobile) {
+      user.verifiedMobile = true;
+    }
+    const accessToken = await signToken({ mobile, id: user._id });
+    await user.save();
+    return accessToken;
   }
 }
 module.exports = new AuthService();

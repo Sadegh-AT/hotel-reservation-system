@@ -1,6 +1,7 @@
 const autoBind = require("auto-bind");
 const authService = require("./auth.service");
 const AuthMessage = require("./auth.messages");
+const CookieName = require("../../constant/cookie.enum");
 
 class AuthController {
   constructor() {
@@ -14,6 +15,22 @@ class AuthController {
       return res.json({
         data: resault,
         message: AuthMessage.SendOtpSuccessfully,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async checkOTP(req, res, next) {
+    try {
+      const { mobile, code } = req.body;
+      const token = await authService.checkOTP(mobile, code);
+      res.cookie(CookieName.AccessToken, token, {
+        httpOnly: false,
+        secure: false,
+      });
+      return res.json({
+        data: token,
+        message: "ورود با موفیقت انجام شد",
       });
     } catch (error) {
       next(error);
