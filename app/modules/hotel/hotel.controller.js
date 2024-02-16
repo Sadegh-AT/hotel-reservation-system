@@ -34,6 +34,15 @@ class HotelController {
       next(error);
     }
   }
+
+  async allHotels(req, res, next) {
+    try {
+      const hotels = await hotelService.getAllHotels();
+      res.json(hotels);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new HotelController();
