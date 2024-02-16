@@ -21,5 +21,11 @@ class RoomService {
     return await HotelModel.deleteOne({ _id: id });
     // return await HotelModel.deleteMany({});
   }
+  async find(name) {
+    const reg = new RegExp(name, "gi");
+
+    return await HotelModel.find({ name: { $regex: reg } });
+    // return await HotelModel.deleteMany({});
+  }
 }
 module.exports = new RoomService();

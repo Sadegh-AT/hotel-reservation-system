@@ -1,5 +1,6 @@
 const autoBind = require("auto-bind");
 const hotelService = require("./hotel.service");
+const createError = require("http-errors");
 
 class HotelController {
   constructor() {
@@ -37,8 +38,17 @@ class HotelController {
 
   async allHotels(req, res, next) {
     try {
-      const hotels = await hotelService.getAllHotels();
-      res.json(hotels);
+      const { name } = req.query;
+      console.log(name);
+      if (name) {
+        const hotels = await hotelService.find(
+          name.toString().replace("+", " ").trim()
+        );
+        res.json(hotels);
+      } else {
+        const hotels = await hotelService.getAllHotels();
+        res.json(hotels);
+      }
     } catch (error) {
       next(error);
     }
