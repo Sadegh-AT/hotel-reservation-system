@@ -1,6 +1,6 @@
 const morgan = require("morgan");
 const { NotFoundError, ErrorHandler } = require("./utils/error-handler");
-const { connectToMongo } = require("./utils/monoose.connection");
+const { connectToMongo } = require("./utils/mongoose-connection");
 const express = require("express");
 const { AllRoutes } = require("./routers/routes");
 const cors = require("cors");
