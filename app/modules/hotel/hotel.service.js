@@ -17,5 +17,9 @@ class RoomService {
     );
     return hotel;
   }
+  async remove(id) {
+    return await HotelModel.deleteOne({ _id: id });
+    // return await HotelModel.deleteMany({});
+  }
 }
 module.exports = new RoomService();

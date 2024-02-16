@@ -43,6 +43,15 @@ class HotelController {
       next(error);
     }
   }
+  async removeHotel(req, res, next) {
+    try {
+      const { id } = req.params;
+      const result = await hotelService.remove(id);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new HotelController();
