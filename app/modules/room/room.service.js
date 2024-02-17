@@ -4,6 +4,7 @@ const RoomModel = require("./room.model");
 const HotelModel = require("../hotel/hotel.model");
 const createHttpError = require("http-errors");
 const { timeNow } = require("../../utils/functions");
+const { Types } = require("mongoose");
 
 class RoomService {
   constructor() {
@@ -28,23 +29,28 @@ class RoomService {
     });
     return rooms;
   }
-  async getAvailbleRoom(id) {
-    const hotel = await HotelModel.findById(id);
-    if (!hotel) throw createHttpError.NotFound("هتل پیدا نشد");
-    const now = timeNow();
-    return await RoomModel.find(
-      { $and: [{ hotelId: id }, { availability: true }] },
-      {}
-    );
-  }
+
   async bookRoom(id, dates) {
     const room = await RoomModel.findById({ _id: id });
-    console.log(dates);
+
     if (!room) throw createHttpError.NotFound("اتاق پیدا نشد");
+    const rooms = await RoomModel.find({
+      reservation_date: {
+        $in: dates,
+      },
+    });
+    const reservedRoom = rooms.filter((room) => room._id.equals(id));
+    console.log(reservedRoom.length);
+    if (reservedRoom.length != 0)
+      throw createHttpError.BadRequest(
+        "این اتاق را نمیتوانید در این زمان رزرو کنید"
+      );
     room.reservation_date.push(...dates);
     room.availability = false;
     await room.save();
-    return room;
+    return {
+      message: `رزرو اتاق ${room.room_name} با موفقیت انجام شد`,
+    };
   }
 }
 module.exports = new RoomService();
