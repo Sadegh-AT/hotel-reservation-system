@@ -11,6 +11,10 @@ function getDatesBetween(startDate, endDate) {
 
   return dates;
 }
+function timeNow() {
+  return moment().format("YYYY-MM-DD");
+}
 module.exports = {
   getDatesBetween,
+  timeNow,
 };

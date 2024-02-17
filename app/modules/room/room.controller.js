@@ -22,6 +22,24 @@ class RoomController {
       next(error);
     }
   }
+  async getAllRooms(req, res, next) {
+    try {
+      const { id } = req.params;
+      const rooms = await roomService.get(id);
+      res.json(rooms);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getAvailbleRoom(req, res, next) {
+    try {
+      const { id } = req.params;
+      const rooms = await roomService.getAvailbleRoom(id);
+      res.json(rooms);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new RoomController();

@@ -13,7 +13,7 @@ class RoomService {
   async getAllHotels() {
     const hotel = await HotelModel.find(
       {},
-      { _id: 1, name: 1, address: 1, rates: 1, price: 1 }
+      { _id: 1, name: 1, address: 1, rates: 1, price: 1, rooms: 1 }
     );
     return hotel;
   }
