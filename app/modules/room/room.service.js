@@ -30,9 +30,9 @@ class RoomService {
     return rooms;
   }
 
-  async bookRoom(id, dates) {
-    const room = await RoomModel.findById({ _id: id });
-
+  async bookRoom(id, dates, userId) {
+    const room = await RoomModel.findById(id);
+    const user = await UserModel.findById(userId);
     if (!room) throw createHttpError.NotFound("اتاق پیدا نشد");
     const rooms = await RoomModel.find({
       reservation_date: {
@@ -40,14 +40,16 @@ class RoomService {
       },
     });
     const reservedRoom = rooms.filter((room) => room._id.equals(id));
-    console.log(reservedRoom.length);
+
     if (reservedRoom.length != 0)
       throw createHttpError.BadRequest(
         "این اتاق را نمیتوانید در این زمان رزرو کنید"
       );
     room.reservation_date.push(...dates);
     room.availability = false;
+    user.reserved_room.push(id);
     await room.save();
+    await user.save();
     return {
       message: `رزرو اتاق ${room.room_name} با موفقیت انجام شد`,
     };

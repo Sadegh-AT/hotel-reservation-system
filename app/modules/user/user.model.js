@@ -12,9 +12,16 @@ const UserSchema = new Schema(
     verifiedMobile: { type: Boolean, required: true, default: false },
     otp: { type: OTPSchema },
     birthday_date: { type: String, required: false, default: "" },
+    reserved_room: {
+      type: [Types.ObjectId],
+      ref: "room",
+      required: false,
+      default: [],
+    },
   },
   {
-    timestamps: true,
+    timestamps: false,
+    versionKey: false,
   }
 );
 const UserModel = model("user", UserSchema);

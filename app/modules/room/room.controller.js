@@ -38,8 +38,13 @@ class RoomController {
   async bookRoom(req, res, next) {
     try {
       const { roomId, startDate, endDate } = req.body;
+
       const reservationDate = getDatesBetween(startDate, endDate);
-      const resault = await roomService.bookRoom(roomId, reservationDate);
+      const resault = await roomService.bookRoom(
+        roomId,
+        reservationDate,
+        req.user._id
+      );
       res.json(resault);
     } catch (error) {
       next(error);

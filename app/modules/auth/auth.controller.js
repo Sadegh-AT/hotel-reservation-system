@@ -13,7 +13,7 @@ class AuthController {
       const resault = await authService.sendOTP(mobile);
 
       return res.json({
-        data: resault,
+        code: resault,
         message: AuthMessage.SendOtpSuccessfully,
       });
     } catch (error) {

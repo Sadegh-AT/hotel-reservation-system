@@ -19,14 +19,14 @@ class AuthService {
     };
     if (!user) {
       const newUser = await UserModel.create({ mobile, otp });
-      return newUser;
+      return newUser.otp.code;
     }
     if (user.otp && user.otp.expiresIn > now) {
       throw createError.BadRequest(AuthMessage.OtpCodeNotExpired);
     }
     user.otp = otp;
     await user.save();
-    return user;
+    return user.otp.code;
   }
   async checkOTP(mobile, code) {
     const user = await UserModel.findOne({ mobile });
