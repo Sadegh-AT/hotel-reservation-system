@@ -17,6 +17,9 @@ class RoomService {
     );
     return hotel;
   }
+  async get(id) {
+    return await HotelModel.findById(id).populate("rooms");
+  }
   async remove(id) {
     return await HotelModel.deleteOne({ _id: id });
     // return await HotelModel.deleteMany({});

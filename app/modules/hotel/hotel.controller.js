@@ -39,7 +39,8 @@ class HotelController {
   async allHotels(req, res, next) {
     try {
       const { name } = req.query;
-      console.log(name);
+      const { id } = req.params;
+      console.log(id);
       if (name) {
         const hotels = await hotelService.find(
           name.toString().replace("+", " ").trim()
@@ -49,6 +50,15 @@ class HotelController {
         const hotels = await hotelService.getAllHotels();
         res.json(hotels);
       }
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getHotel(req, res, next) {
+    try {
+      const { id } = req.params;
+      const result = await hotelService.get(id);
+      res.json(result);
     } catch (error) {
       next(error);
     }
