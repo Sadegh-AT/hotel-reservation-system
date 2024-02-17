@@ -1,5 +1,7 @@
 const autoBind = require("auto-bind");
 const roomService = require("./room.service");
+const { getDatesBetween } = require("../../utils/functions");
+const RoomModel = require("./room.model");
 
 class RoomController {
   constructor() {
@@ -22,10 +24,11 @@ class RoomController {
       next(error);
     }
   }
-  async getAllRooms(req, res, next) {
+  async getRooms(req, res, next) {
     try {
-      const { id } = req.params;
-      const rooms = await roomService.get(id);
+      const { hotelId, startDate, endDate } = req.body;
+      const dates = getDatesBetween(startDate, endDate);
+      const rooms = await roomService.get(hotelId, dates);
       res.json(rooms);
     } catch (error) {
       next(error);
@@ -36,6 +39,16 @@ class RoomController {
       const { id } = req.params;
       const rooms = await roomService.getAvailbleRoom(id);
       res.json(rooms);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async bookRoom(req, res, next) {
+    try {
+      const { roomId, startDate, endDate } = req.body;
+      const reservationDate = getDatesBetween(startDate, endDate);
+      const resault = await roomService.bookRoom(roomId, reservationDate);
+      res.json(resault);
     } catch (error) {
       next(error);
     }

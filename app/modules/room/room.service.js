@@ -18,10 +18,15 @@ class RoomService {
     hotel.save();
     return room;
   }
-  async get(id) {
+  async get(id, dates) {
     const hotel = await HotelModel.findById(id);
     if (!hotel) throw createHttpError.NotFound("هتل پیدا نشد");
-    return await RoomModel.find({ hotelId: id }, {});
+    const rooms = await RoomModel.find({
+      reservation_date: {
+        $nin: dates,
+      },
+    });
+    return rooms;
   }
   async getAvailbleRoom(id) {
     const hotel = await HotelModel.findById(id);
@@ -31,6 +36,15 @@ class RoomService {
       { $and: [{ hotelId: id }, { availability: true }] },
       {}
     );
+  }
+  async bookRoom(id, dates) {
+    const room = await RoomModel.findById({ _id: id });
+    console.log(dates);
+    if (!room) throw createHttpError.NotFound("اتاق پیدا نشد");
+    room.reservation_date.push(...dates);
+    room.availability = false;
+    await room.save();
+    return room;
   }
 }
 module.exports = new RoomService();
