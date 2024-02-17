@@ -7,9 +7,9 @@ const { UserRoutes } = require("../modules/user/user.routes");
 const router = require("express").Router();
 
 router.use("/auth", AuthRoutes);
-router.use("/room", AuthorizationGuard, RoomRoutes);
+router.use("/room", RoomRoutes);
 router.use("/hotel", HotelRoutes);
-router.use("/user", UserRoutes);
+router.use("/user", AuthorizationGuard, UserRoutes);
 
 router.get("/", (req, res) => {
   res.json("Hello");

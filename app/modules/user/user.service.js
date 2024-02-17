@@ -6,6 +6,11 @@ class UserService {
     autoBind(this);
   }
 
-  async create(dto) {}
+  async rooms(id) {
+    console.log(id);
+    const user = await UserModel.findById(id).populate("reserved_room");
+    console.log(user);
+    return user;
+  }
 }
 module.exports = new UserService();
