@@ -2,6 +2,7 @@ const autoBind = require("auto-bind");
 const roomService = require("./room.service");
 const { getDatesBetween } = require("../../utils/functions");
 const RoomModel = require("./room.model");
+const createHttpError = require("http-errors");
 
 class RoomController {
   constructor() {
@@ -27,6 +28,8 @@ class RoomController {
   async getRooms(req, res, next) {
     try {
       const { hotelId, startDate, endDate } = req.body;
+      if (!startDate || !endDate)
+        throw createHttpError.BadRequest("تاریخ را وارد کنید");
       const dates = getDatesBetween(startDate, endDate);
       const rooms = await roomService.get(hotelId, dates);
       res.json(rooms);

@@ -1,9 +1,23 @@
 const { Schema, Types, model } = require("mongoose");
 
-const OTPSchema = new Schema({
-  code: { type: String, required: false, default: "" },
-  expiresIn: { type: Number, required: false, default: 0 },
-});
+const OTPSchema = new Schema(
+  {
+    code: { type: String, required: false, default: "" },
+    expiresIn: { type: Number, required: false, default: 0 },
+  },
+  {
+    _id: false,
+  }
+);
+const ReserverdRoomSchema = new Schema(
+  {
+    roomId: { type: Types.ObjectId, ref: "room", required: false },
+    reserved_date: { type: [String], required: false, default: [] },
+  },
+  {
+    _id: false,
+  }
+);
 const UserSchema = new Schema(
   {
     name: { type: String, required: false, default: "" },
@@ -13,10 +27,7 @@ const UserSchema = new Schema(
     otp: { type: OTPSchema },
     birthday_date: { type: String, required: false, default: "" },
     reserved_room: {
-      type: [Types.ObjectId],
-      ref: "room",
-      required: false,
-      default: [],
+      type: [ReserverdRoomSchema],
     },
   },
   {

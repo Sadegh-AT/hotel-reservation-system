@@ -13,6 +13,15 @@ class UserController {
       next(error);
     }
   }
+  async cancelReservation(req, res, next) {
+    try {
+      const { id } = req.params;
+      const resault = await userService.cancel(id);
+      res.json(resault);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new UserController();
