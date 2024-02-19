@@ -24,9 +24,22 @@ class UserService {
     console.log(user);
     return user;
   }
-  async cancel(id) {
-    const room = await RoomModel.findById(id);
-    if (!room) throw createHttpError.NotFound("اتاق پیدا نشد");
+  async cancel(roomId, userId) {
+    const user = await UserModel.findById(userId);
+    const cancledRoomDates = user.reserved_room.find(
+      (room) => room.roomId == roomId
+    ).reserved_date;
+    console.log(cancledRoomDates);
+    await RoomModel.updateOne(
+      { _id: roomId },
+      { $pull: { reservation_date: { $in: cancledRoomDates } } }
+    );
+    await UserModel.updateOne(
+      { _id: userId },
+      { $pull: { reserved_room: { roomId } } }
+    );
+
+    return { message: `رزور اتاق مورد نظر لغو شد` };
   }
 }
 module.exports = new UserService();

@@ -16,7 +16,7 @@ class UserController {
   async cancelReservation(req, res, next) {
     try {
       const { id } = req.params;
-      const resault = await userService.cancel(id);
+      const resault = await userService.cancel(id, req.user._id);
       res.json(resault);
     } catch (error) {
       next(error);
