@@ -1,0 +1,149 @@
+[{
+  "_id": {
+    "$oid": "65d096ea0579974bfd4bc8dd"
+  },
+  "room_number": "101",
+  "room_name": "اتاق یک تخته رویال",
+  "capacity": 2,
+  "price": 500000,
+  "availability": false,
+  "images": [
+    "image1.jpg",
+    "image2.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  },
+  "createdAt": {
+    "$date": "2024-02-17T11:22:18.931Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-17T11:22:18.931Z"
+  },
+  "__v": 0,
+  "reservation_date": []
+},
+{
+  "_id": {
+    "$oid": "65d097150579974bfd4bc8e3"
+  },
+  "room_number": "102",
+  "room_name": "اتاق دو تخته VIP",
+  "capacity": 4,
+  "price": 800000,
+  "availability": false,
+  "images": [
+    "image3.jpg",
+    "image4.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  },
+  "createdAt": {
+    "$date": "2024-02-17T11:23:01.487Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-17T11:23:01.487Z"
+  },
+  "__v": 0,
+  "reservation_date": [
+    "1402/10/01",
+    "1402/10/02",
+    "1402/10/03",
+    "1402/10/04",
+    "1402/10/05"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65d09ff5e29c652ff417630d"
+  },
+  "room_number": "103",
+  "room_name": "اتاق یک تخته رویال",
+  "capacity": 2,
+  "price": 500000,
+  "availability": false,
+  "images": [
+    "image5.jpg",
+    "image6.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  },
+  "reservation_date": [
+    "1402/10/01",
+    "1402/10/02",
+    "1402/10/03",
+    "1402/10/04",
+    "1402/10/05"
+  ]
+},
+{
+  "_id": {
+    "$oid": "65d09ff9e29c652ff4176311"
+  },
+  "room_number": "104",
+  "room_name": "اتاق دو تخته VIP",
+  "capacity": 4,
+  "price": 800000,
+  "availability": false,
+  "images": [
+    "image7.jpg",
+    "image8.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  }
+},
+{
+  "_id": {
+    "$oid": "65d09ffee29c652ff4176315"
+  },
+  "room_number": "105",
+  "room_name": "اتاق سه تخته استاندارد",
+  "capacity": 3,
+  "price": 600000,
+  "availability": false,
+  "images": [
+    "image9.jpg",
+    "image10.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  },
+  "reservation_date": []
+},
+{
+  "_id": {
+    "$oid": "65d0a001e29c652ff4176319"
+  },
+  "room_number": "106",
+  "room_name": "اتاق دو تخته اقتصادی",
+  "capacity": 2,
+  "price": 450000,
+  "availability": false,
+  "images": [
+    "image11.jpg",
+    "image12.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  }
+},
+{
+  "_id": {
+    "$oid": "65d0a006e29c652ff417631d"
+  },
+  "room_number": "107",
+  "room_name": "اتاق چهار تخته لوکس",
+  "capacity": 4,
+  "price": 900000,
+  "availability": false,
+  "images": [
+    "image13.jpg",
+    "image14.jpg"
+  ],
+  "hotelId": {
+    "$oid": "65cf9864d3d7bf80d55f28c1"
+  }
+}]
