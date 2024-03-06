@@ -1,4 +1,5 @@
 const { Schema, Types, model } = require("mongoose");
+const RulesName = require("../../constant/rules.enum");
 
 const OTPSchema = new Schema(
   {
@@ -29,6 +30,7 @@ const UserSchema = new Schema(
     reserved_room: {
       type: [ReserverdRoomSchema],
     },
+    rules: { type: [String], require: false, default: [RulesName.User] },
   },
   {
     timestamps: false,
