@@ -6,7 +6,7 @@ const { UserRoutes } = require("../modules/user/user.routes");
 
 const router = require("express").Router();
 
-router.use("/auth", Aut8hRoutes);
+router.use("/auth", AuthRoutes);
 router.use("/room", RoomRoutes);
 router.use("/hotel", HotelRoutes);
 router.use("/user", AuthorizationGuard, UserRoutes);
