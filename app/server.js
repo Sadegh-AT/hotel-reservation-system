@@ -7,11 +7,12 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const { connectToRedis, ConnectToRedis } = require("./utils/redis-connection");
 
 class Application {
-  constructor(PORT, DB_URL) {
+  constructor(PORT, DB_URL, REDIS_URL) {
     this.configServer();
-    this.configDatabase(DB_URL);
+    this.configDatabase(DB_URL, REDIS_URL);
     this.createServer(PORT);
     this.createRoutes();
     this.errorHandler();
@@ -26,8 +27,9 @@ class Application {
     app.use(morgan("dev"));
   }
 
-  configDatabase(DB_URL) {
+  configDatabase(DB_URL, REDIS_URL) {
     connectToMongo(DB_URL);
+    new ConnectToRedis(REDIS_URL).connect();
   }
 
   createServer(PORT) {

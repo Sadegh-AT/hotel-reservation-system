@@ -12,6 +12,13 @@ class UserService {
     console.log(id);
     const user = await UserModel.findById(id, {
       "reserved_room.roomId.reservation_date": 0,
+      name: 0,
+      family: 0,
+      mobile: 0,
+      verifiedMobile: 0,
+      otp: 0,
+      birthday_date: 0,
+      rules: 0,
     }).populate({
       path: "reserved_room.roomId",
       select: "_id room_name hotelId",
@@ -21,7 +28,6 @@ class UserService {
       },
     });
 
-    console.log(user);
     return user;
   }
   async cancel(roomId, userId) {

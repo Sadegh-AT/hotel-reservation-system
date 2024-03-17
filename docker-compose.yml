@@ -7,6 +7,14 @@ services:
       - "27017:27017"
     volumes:
       - ./database/mongodb_data:/data/db
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./database/redis_data:/data
 
 volumes:
   mongodb_data:
+  redis_data:

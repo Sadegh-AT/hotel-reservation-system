@@ -10,7 +10,10 @@ class AuthService {
   }
 
   async sendOTP(mobile) {
-    const user = await UserModel.findOne({ mobile }, { mobile: 1, otp: 1 });
+    const user = await UserModel.findOne(
+      { mobile },
+      { mobile: 1, otp: 1, verifiedMobile: 1 }
+    );
     console.log(user);
     const now = new Date().getTime();
     const otp = {
@@ -20,6 +23,10 @@ class AuthService {
     if (!user) {
       const newUser = await UserModel.create({ mobile, otp });
       return newUser.otp.code;
+    }
+    console.log(user.verifiedMobile);
+    if (user.verifiedMobile) {
+      throw createError.BadRequest("شما داخل حساب کابری هستید");
     }
     if (user.otp && user.otp.expiresIn > now) {
       throw createError.BadRequest(AuthMessage.OtpCodeNotExpired);
@@ -41,7 +48,11 @@ class AuthService {
     if (!user.verifiedMobile) {
       user.verifiedMobile = true;
     }
-    const accessToken = await signToken({ mobile, id: user._id });
+    const accessToken = await signToken({
+      mobile,
+      id: user._id,
+      verifiedMobile: user.verifiedMobile,
+    });
     await user.save();
     return accessToken;
   }
