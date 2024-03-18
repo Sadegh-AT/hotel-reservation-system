@@ -6,8 +6,6 @@ const ConnectToRedis = require("../utils/redis-connection");
 
 const AuthorizationGuard = async (req, res, next) => {
   try {
-    const a = ConnectToRedis.get("name");
-    console.log(a);
     const token = req?.cookies[AccessToken];
     if (!token)
       throw createHttpError.Unauthorized("لطفا وارد حساب کاربری خود شوید");

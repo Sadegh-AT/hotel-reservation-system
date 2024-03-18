@@ -40,7 +40,7 @@ class HotelController {
     try {
       const { name } = req.query;
       const { id } = req.params;
-      console.log(id);
+
       if (name) {
         const hotels = await hotelService.find(
           name.toString().replace("+", " ").trim()

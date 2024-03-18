@@ -1,6 +1,6 @@
 const { createClient } = require("redis");
 
-class ConnectToRedis {
+class RedisDB {
   constructor(REDIS_URL) {
     this.Url = REDIS_URL;
     this.client = createClient({ url: this.Url });
@@ -24,4 +24,4 @@ class ConnectToRedis {
   }
 }
 require("dotenv").config();
-module.exports = new ConnectToRedis(process.env.REDIS_URL);
+module.exports = new RedisDB(process.env.REDIS_URL);
