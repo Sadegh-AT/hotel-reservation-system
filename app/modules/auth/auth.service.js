@@ -14,7 +14,7 @@ class AuthService {
       { mobile },
       { mobile: 1, otp: 1, verifiedMobile: 1 }
     );
-    console.log(user);
+
     const now = new Date().getTime();
     const otp = {
       code: randomInt(10000, 99999),
@@ -24,10 +24,7 @@ class AuthService {
       const newUser = await UserModel.create({ mobile, otp });
       return newUser.otp.code;
     }
-    console.log(user.verifiedMobile);
-    if (user.verifiedMobile) {
-      throw createError.BadRequest("شما داخل حساب کابری هستید");
-    }
+
     if (user.otp && user.otp.expiresIn > now) {
       throw createError.BadRequest(AuthMessage.OtpCodeNotExpired);
     }

@@ -7,7 +7,7 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const { connectToRedis, ConnectToRedis } = require("./utils/redis-connection");
+const ConnectToRedis = require("./utils/redis-connection");
 
 class Application {
   constructor(PORT, DB_URL, REDIS_URL) {
@@ -29,7 +29,7 @@ class Application {
 
   configDatabase(DB_URL, REDIS_URL) {
     connectToMongo(DB_URL);
-    new ConnectToRedis(REDIS_URL).connect();
+    ConnectToRedis.connect();
   }
 
   createServer(PORT) {

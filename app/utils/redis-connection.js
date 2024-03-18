@@ -3,7 +3,7 @@ const { createClient } = require("redis");
 class ConnectToRedis {
   constructor(REDIS_URL) {
     this.Url = REDIS_URL;
-    // this.client =
+    this.client = createClient({ url: this.Url });
   }
   connect() {
     this.client
@@ -11,13 +11,17 @@ class ConnectToRedis {
       .then(() => {
         console.log(`Connect to Redis: ${this.Url}`);
       })
-      .catch((error) => {
-        throw error;
+      .catch((err) => {
+        throw err;
       });
   }
-  static getClient() {
-    return this.client;
+  async set(key, value, callback) {
+    return await this.client.set(key, value, callback);
+  }
+
+  async get(key, callback) {
+    return await this.client.get(key, callback);
   }
 }
-
-module.exports = { ConnectToRedis };
+require("dotenv").config();
+module.exports = new ConnectToRedis(process.env.REDIS_URL);

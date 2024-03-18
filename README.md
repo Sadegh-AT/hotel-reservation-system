@@ -31,7 +31,7 @@
 سپس با استفاده از این ادرس کد ارسال شده رو چک میکنید:
 
 ```http
-  GET /auth/send-otp
+  GET /auth/check-otp
 ```
 
 | Parameter | Type     | Description      |
