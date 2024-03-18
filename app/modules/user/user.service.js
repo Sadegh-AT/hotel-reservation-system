@@ -47,5 +47,9 @@ class UserService {
 
     return { message: `رزور اتاق مورد نظر لغو شد` };
   }
+  async getUser(id) {
+    const user = await UserModel.findById(id, { otp: 0, verifiedMobile: 0 });
+    return user;
+  }
 }
 module.exports = new UserService();

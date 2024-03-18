@@ -22,6 +22,15 @@ class UserController {
       next(error);
     }
   }
+  async profile(req, res, next) {
+    try {
+      const id = req.user._id;
+      const resault = await userService.getUser(id);
+      res.json(resault);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new UserController();
