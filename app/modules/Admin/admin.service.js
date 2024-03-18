@@ -21,5 +21,14 @@ class AdminService {
 
     return await user.save();
   }
+  async removeRule(id, rule) {
+    const user = await UserModel.findById(id);
+    if (!user) throw createHttpError.NotFound("کاربر پیدا نشد");
+    const index = user.rules.indexOf(rule);
+    if (index !== -1) {
+      user.rules.splice(index, 1);
+    }
+    return await user.save();
+  }
 }
 module.exports = new AdminService();

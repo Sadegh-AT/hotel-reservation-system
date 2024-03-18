@@ -1,4 +1,6 @@
+const RulesName = require("../constant/rules.enum");
 const { AuthorizationGuard } = require("../middleware/authorization.guard");
+const { RuleGuard } = require("../middleware/rule.guard");
 const { AdminRoutes } = require("../modules/Admin/admin.routes");
 const { AuthRoutes } = require("../modules/auth/auth.routes");
 const { HotelRoutes } = require("../modules/hotel/hotel.routes");
@@ -10,7 +12,12 @@ const router = require("express").Router();
 router.use("/auth", AuthRoutes);
 router.use("/room", RoomRoutes);
 router.use("/hotel", HotelRoutes);
-router.use("/admin", AdminRoutes);
+router.use(
+  "/admin",
+  AuthorizationGuard,
+  RuleGuard(RulesName.Admin),
+  AdminRoutes
+);
 router.use("/user", AuthorizationGuard, UserRoutes);
 
 router.get("/", (req, res) => {

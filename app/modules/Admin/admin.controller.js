@@ -22,6 +22,15 @@ class AdminController {
       next(error);
     }
   }
+  async removeRule(req, res, next) {
+    try {
+      const { id, rule } = req.body;
+      const a = await adminService.removeRule(id, rule);
+      res.json(a);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new AdminController();
