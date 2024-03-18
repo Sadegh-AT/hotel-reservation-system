@@ -30,7 +30,12 @@ const UserSchema = new Schema(
     reserved_room: {
       type: [ReserverdRoomSchema],
     },
-    rules: { type: [String], require: false, default: [RulesName.User] },
+    rules: {
+      type: [String],
+      enum: RulesName,
+      require: false,
+      default: [RulesName.User],
+    },
   },
   {
     timestamps: false,
