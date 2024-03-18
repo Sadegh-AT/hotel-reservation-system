@@ -3,7 +3,9 @@ const UserModel = require("../user/user.model");
 const createError = require("http-errors");
 const { randomInt } = require("crypto");
 const AuthMessage = require("./auth.messages");
+const RedisDB = require("../../utils/redis-connection");
 const { signToken } = require("../../utils/token-manager");
+const RedisKey = require("../../constant/redis.key");
 class AuthService {
   constructor() {
     autoBind(this);
@@ -52,6 +54,13 @@ class AuthService {
     });
     await user.save();
     return accessToken;
+  }
+  async logoutAccount(token) {
+    try {
+      await RedisDB.sadd(RedisKey.LoggedOutTokens, token);
+    } catch (error) {
+      throw error;
+    }
   }
 }
 module.exports = new AuthService();

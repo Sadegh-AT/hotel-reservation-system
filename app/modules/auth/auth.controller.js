@@ -2,6 +2,8 @@ const autoBind = require("auto-bind");
 const authService = require("./auth.service");
 const AuthMessage = require("./auth.messages");
 const CookieName = require("../../constant/cookie.enum");
+const RedisDB = require("../../utils/redis-connection");
+const { getToken } = require("../../utils/functions");
 
 class AuthController {
   constructor() {
@@ -24,13 +26,25 @@ class AuthController {
     try {
       const { mobile, code } = req.body;
       const token = await authService.checkOTP(mobile, code);
-      res.cookie(CookieName.AccessToken, token, {
+      res.cookie(CookieName.AccessToken, `Bearer ${token}`, {
         httpOnly: false,
         secure: false,
       });
       return res.json({
         data: token,
         message: "ورود با موفیقت انجام شد",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  async logout(req, res, next) {
+    try {
+      const token = getToken(req);
+      await authService.logoutAccount(token);
+      res.clearCookie(CookieName.AccessToken);
+      return res.json({
+        message: "شما از حساب خود خارج شدید",
       });
     } catch (error) {
       next(error);

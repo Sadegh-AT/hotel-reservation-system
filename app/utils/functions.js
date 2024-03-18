@@ -1,5 +1,6 @@
 const createHttpError = require("http-errors");
 const moment = require("jalali-moment");
+const CookieName = require("../constant/cookie.enum");
 
 function getDatesBetween(startDate, endDate) {
   const dates = [];
@@ -20,7 +21,19 @@ function getDatesBetween(startDate, endDate) {
 function timeNow() {
   return moment().format("YYYY-MM-DD");
 }
+
+function getToken(req) {
+  try {
+    const token =
+      req?.headers["authorization"] || req?.cookies[CookieName.AccessToken];
+
+    return token.split("Bearer")[1].trim();
+  } catch (error) {
+    throw createHttpError.Unauthorized("لطفا وارد حساب کاربری خود شوید");
+  }
+}
 module.exports = {
   getDatesBetween,
   timeNow,
+  getToken,
 };

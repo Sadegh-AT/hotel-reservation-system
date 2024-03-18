@@ -18,6 +18,12 @@ class RedisDB {
   async set(key, value, callback) {
     return await this.client.set(key, value, callback);
   }
+  async sadd(key, value, callback) {
+    return await this.client.sAdd(key, value, callback);
+  }
+  async sismember(key, value, callback) {
+    return await this.client.sIsMember(key, value, callback);
+  }
 
   async get(key, callback) {
     return await this.client.get(key, callback);
