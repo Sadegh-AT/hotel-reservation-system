@@ -6,7 +6,7 @@
 
 برای راحت شدن فرایند راه اندازی کافیست از `‍Docker‍‍` کمک بگیرید
 
-[آموزش نصب داکر](https://choosealicense.com/licenses/mit/)
+[آموزش نصب داکر](https://developersho.com/blog/install-docker-desktop-on-windows)
 
 بعد از نصب داکر کافیست دستور زیر راه اجرا کنید (مطمعن باشید که ترمینال را در مسیر پروژه اجرا میکنید)
 
