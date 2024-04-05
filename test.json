@@ -1,0 +1,37 @@
+[
+  {
+    "message": "success",
+    "data": [
+      { "id": 1, "name": "John Doe", "email": "john@example.com", "age": 30 },
+      { "id": 2, "name": "Jane Smith", "email": "jane@example.com", "age": 25 },
+      {
+        "id": 3,
+        "name": "Alice Johnson",
+        "email": "alice@example.com",
+        "age": 35
+      }
+    ],
+    "metadata": {
+      "total_records": 3,
+      "timestamp": "2024-03-29T12:00:00Z",
+      "pagination": {
+        "page": 1,
+        "page_size": 10,
+        "total_pages": 1
+      }
+    },
+    "status": 200,
+    "error": false
+  },
+
+  {
+    "status": 400,
+    "message": "error happen",
+    "data": [],
+    "metadata": {
+      "url": "/user",
+      "timestamp": "2024-03-29T12:00:00Z"
+    },
+    "error": true
+  }
+]

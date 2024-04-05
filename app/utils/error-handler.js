@@ -1,10 +1,11 @@
 const createError = require("http-errors");
+const { responseFormatter } = require("./functions");
 const NotFoundError = (req, res, next) => {
-  next(createError.NotFound(`Not Found Route => ${req.url}`));
+  next(createError.NotFound("صفحه مورد نظر شما پیدا نشد"));
 };
 function validatorHandler(error) {
   const obj = {
-    inValidParams: {},
+    invalidParams: {},
   };
 
   error?.errors?.forEach((err) => {
@@ -14,13 +15,13 @@ function validatorHandler(error) {
   return error.errors ? obj : error;
 }
 const ErrorHandler = (err, req, res, next) => {
-  return res.status(err?.status || 500).json({
-    statusCode: res.statusCode,
-    error: {
-      message: err?.message || `Internal Server Error`,
-      inValidParams: err.inValidParams ? err.inValidParams : null,
-    },
-  });
+  console.log(req.url);
+  const metadata = {
+    url: req.url,
+  };
+  return res
+    .status(err?.status || 500)
+    .json(responseFormatter(err?.message, err.status, [], metadata, true));
 };
 
 module.exports = {

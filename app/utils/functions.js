@@ -32,8 +32,19 @@ function getToken(req) {
     throw createHttpError.Unauthorized("لطفا وارد حساب کاربری خود شوید");
   }
 }
+
+function responseFormatter(msg, statusCode, data, metadata, err = true) {
+  return {
+    status: statusCode,
+    message: msg || `Internal Server Error`,
+    data,
+    metadata,
+    error: err,
+  };
+}
 module.exports = {
   getDatesBetween,
   timeNow,
   getToken,
+  responseFormatter,
 };
