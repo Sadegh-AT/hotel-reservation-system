@@ -3,7 +3,8 @@ const authService = require("./auth.service");
 const AuthMessage = require("./auth.messages");
 const CookieName = require("../../constant/cookie.enum");
 const RedisDB = require("../../utils/redis-connection");
-const { getToken } = require("../../utils/functions");
+const { StatusCodes } = require("http-status-codes");
+const { getToken, responseFormatter } = require("../../utils/functions");
 
 class AuthController {
   constructor() {
@@ -13,7 +14,18 @@ class AuthController {
     try {
       const { mobile } = req.body;
       const resault = await authService.sendOTP(mobile);
-
+      const metadata = {
+        
+      }
+      return res.json(
+        responseFormatter(
+          AuthMessage.SendOtpSuccessfully,
+          StatusCodes.OK,
+          resault,
+          [],
+          false
+        )
+      );
       return res.json({
         code: resault,
         message: AuthMessage.SendOtpSuccessfully,

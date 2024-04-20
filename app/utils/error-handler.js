@@ -15,13 +15,9 @@ function validatorHandler(error) {
   return error.errors ? obj : error;
 }
 const ErrorHandler = (err, req, res, next) => {
-  console.log(req.url);
-  const metadata = {
-    url: req.url,
-  };
   return res
     .status(err?.status || 500)
-    .json(responseFormatter(err?.message, err.status, [], metadata, true));
+    .json(responseFormatter(err?.message, err.status, [], req, true));
 };
 
 module.exports = {

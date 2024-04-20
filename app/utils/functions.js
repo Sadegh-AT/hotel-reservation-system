@@ -33,12 +33,16 @@ function getToken(req) {
   }
 }
 
-function responseFormatter(msg, statusCode, data, metadata, err = true) {
+function responseFormatter(msg, statusCode, data, req, err = true) {
+  console.log(req.receivedAt);
   return {
     status: statusCode,
     message: msg || `Internal Server Error`,
     data,
-    metadata,
+    metadata: {
+      url: req.url,
+      timestamp: req.receivedAt,
+    },
     error: err,
   };
 }

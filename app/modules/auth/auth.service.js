@@ -32,7 +32,9 @@ class AuthService {
     }
     user.otp = otp;
     await user.save();
-    return user.otp.code;
+    return {
+      code: user.otp.code,
+    };
   }
   async checkOTP(mobile, code) {
     const user = await UserModel.findOne({ mobile });
