@@ -42,6 +42,7 @@ function responseFormatter(msg, statusCode, data, req, err = true) {
     metadata: {
       url: req.originalUrl,
       timestamp: req.receivedAt,
+      dataRecords: data.length,
     },
     error: err,
   };
