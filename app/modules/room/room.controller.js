@@ -20,7 +20,7 @@ class RoomController {
         images,
         hotelId,
       });
-      res.json(resault);
+      res.json(responseFormatter("اتاق ساخته شد", 200, resault, req, false));
     } catch (error) {
       next(error);
     }
@@ -32,7 +32,9 @@ class RoomController {
         throw createHttpError.BadRequest("تاریخ را وارد کنید");
       const dates = getDatesBetween(startDate, endDate);
       const rooms = await roomService.get(hotelId, dates);
-      res.json(rooms);
+      res.json(
+        responseFormatter("اطلاعات اتاق ها گرفته شد", 200, rooms, req, false)
+      );
     } catch (error) {
       next(error);
     }
@@ -48,7 +50,8 @@ class RoomController {
         reservationDate,
         req.user._id
       );
-      res.json(resault);
+
+      res.json(responseFormatter(resault, 200, {}, req, false));
     } catch (error) {
       next(error);
     }

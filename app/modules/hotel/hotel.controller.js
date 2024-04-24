@@ -1,6 +1,7 @@
 const autoBind = require("auto-bind");
 const hotelService = require("./hotel.service");
 const createError = require("http-errors");
+const { responseFormatter } = require("../../utils/functions");
 
 class HotelController {
   constructor() {
@@ -30,7 +31,7 @@ class HotelController {
         services,
         images,
       });
-      res.json(hotel);
+      res.json(responseFormatter("", 200, hotel, req, false));
     } catch (error) {
       next(error);
     }
@@ -48,7 +49,16 @@ class HotelController {
         res.json(hotels);
       } else {
         const hotels = await hotelService.getAllHotels();
-        res.json(hotels);
+
+        res.json(
+          responseFormatter(
+            "اطلاعات هتل ها با موفقیت اماده شد",
+            200,
+            hotels,
+            req,
+            false
+          )
+        );
       }
     } catch (error) {
       next(error);
@@ -58,7 +68,7 @@ class HotelController {
     try {
       const { id } = req.params;
       const result = await hotelService.get(id);
-      res.json(result);
+      res.json(responseFormatter("", 200, result, req, false));
     } catch (error) {
       next(error);
     }
@@ -67,7 +77,7 @@ class HotelController {
     try {
       const { id } = req.params;
       const result = await hotelService.remove(id);
-      res.json(result);
+      res.json(responseFormatter("", 200, result, req, false));
     } catch (error) {
       next(error);
     }

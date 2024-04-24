@@ -1,5 +1,6 @@
 const RulesName = require("../../constant/rules.enum");
 const { AuthorizationGuard } = require("../../middleware/authorization.guard");
+
 const { RuleGuard } = require("../../middleware/rule.guard");
 const hotelController = require("./hotel.controller");
 

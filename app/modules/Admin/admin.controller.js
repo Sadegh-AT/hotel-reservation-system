@@ -8,7 +8,9 @@ class AdminController {
   async users(req, res, next) {
     try {
       const users = await adminService.getUsers();
-      res.json(users);
+      res.json(
+        responseFormatter("اطلاعات کاربران گرفته شد", 200, users, req, false)
+      );
     } catch (error) {
       next(error);
     }
@@ -17,7 +19,9 @@ class AdminController {
     try {
       const { id, rule } = req.body;
       const a = await adminService.setRule(id, rule);
-      res.json(a);
+      res.json(
+        responseFormatter("سطح دسترسی برای کاربر اضافه شد", 200, a, req, false)
+      );
     } catch (error) {
       next(error);
     }
@@ -26,7 +30,9 @@ class AdminController {
     try {
       const { id, rule } = req.body;
       const a = await adminService.removeRule(id, rule);
-      res.json(a);
+      res.json(
+        responseFormatter("سطح دسترسی از کاربر گرفته شد", 200, a, req, false)
+      );
     } catch (error) {
       next(error);
     }

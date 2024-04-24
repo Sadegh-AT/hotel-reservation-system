@@ -1,5 +1,6 @@
 const autoBind = require("auto-bind");
 const HotelModel = require("./hotel.model");
+const { responseFormatter } = require("../../utils/functions");
 
 class RoomService {
   constructor() {
@@ -15,6 +16,7 @@ class RoomService {
       {},
       { _id: 1, name: 1, address: 1, rates: 1, price: 1, rooms: 1 }
     );
+
     return hotel;
   }
   async get(id) {

@@ -36,11 +36,11 @@ function getToken(req) {
 function responseFormatter(msg, statusCode, data, req, err = true) {
   console.log(req.receivedAt);
   return {
-    status: statusCode,
+    status: statusCode || 500,
     message: msg || `Internal Server Error`,
     data,
     metadata: {
-      url: req.url,
+      url: req.originalUrl,
       timestamp: req.receivedAt,
     },
     error: err,
