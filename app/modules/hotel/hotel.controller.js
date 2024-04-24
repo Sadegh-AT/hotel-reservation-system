@@ -1,6 +1,7 @@
 const autoBind = require("auto-bind");
 const hotelService = require("./hotel.service");
 const createError = require("http-errors");
+const path = require("path");
 const { responseFormatter } = require("../../utils/functions");
 
 class HotelController {
@@ -9,17 +10,12 @@ class HotelController {
   }
   async createHotel(req, res, next) {
     try {
-      const {
-        name,
-        address,
-        phone,
-        email,
-        website,
-        rates,
-        price,
-        services,
-        images,
-      } = req.body;
+      const { name, address, phone, email, website, rates, price, services } =
+        req.body;
+      const images = req?.files?.map((image) =>
+        path.normalize(image?.path?.slice(7))
+      );
+
       const hotel = await hotelService.create({
         name,
         address,

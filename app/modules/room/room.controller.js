@@ -10,8 +10,10 @@ class RoomController {
   }
   async createRoom(req, res, next) {
     try {
-      const { room_number, room_name, capacity, price, images, hotelId } =
-        req.body;
+      const { room_number, room_name, capacity, price, hotelId } = req.body;
+      const images = req?.files?.map((image) =>
+        path.normalize(image?.path?.slice(7))
+      );
       const resault = await roomService.create({
         room_number,
         room_name,

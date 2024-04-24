@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 database/mongodb_data
 database/redis_data
+public/upload/
