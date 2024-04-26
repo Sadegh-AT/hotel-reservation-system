@@ -39,7 +39,6 @@ class HotelController {
 
   async allHotels(req, res, next) {
     try {
-      console.log(RedisKey.HotelSearch({ name: "sda" }));
       const { name } = req.query;
 
       if (name) {
@@ -65,6 +64,7 @@ class HotelController {
       next(error);
     }
   }
+
   async getHotel(req, res, next) {
     try {
       const { id } = req.params;

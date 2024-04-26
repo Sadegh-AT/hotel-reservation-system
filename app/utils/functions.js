@@ -34,7 +34,6 @@ function getToken(req) {
 }
 
 function responseFormatter(msg, statusCode, data, req, err = true) {
-  console.log(req.receivedAt);
   return {
     status: statusCode || 500,
     message: msg || `Internal Server Error`,
