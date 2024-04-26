@@ -28,6 +28,9 @@ class RedisDB {
   async get(key, callback) {
     return await this.client.get(key, callback);
   }
+  async del(key, callback) {
+    return await this.client.del(key, callback);
+  }
 }
 require("dotenv").config();
 module.exports = new RedisDB(process.env.REDIS_URL);

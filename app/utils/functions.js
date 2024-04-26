@@ -47,9 +47,24 @@ function responseFormatter(msg, statusCode, data, req, err = true) {
     error: err,
   };
 }
+
+function objectToQueryParams(obj) {
+  // Check if the input is an object
+  if (typeof obj !== "object" || obj === null) {
+    throw new Error("Input must be a valid object");
+  }
+
+  // Convert object to query params format string
+  const queryParams = Object.keys(obj)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
+    .join("&");
+
+  return queryParams;
+}
 module.exports = {
   getDatesBetween,
   timeNow,
   getToken,
   responseFormatter,
+  objectToQueryParams,
 };

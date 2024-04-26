@@ -2,7 +2,11 @@ const autoBind = require("auto-bind");
 const hotelService = require("./hotel.service");
 const createError = require("http-errors");
 const path = require("path");
-const { responseFormatter } = require("../../utils/functions");
+const {
+  responseFormatter,
+  objectToQueryParams,
+} = require("../../utils/functions");
+const RedisKey = require("../../constant/redis.key");
 
 class HotelController {
   constructor() {
@@ -35,12 +39,13 @@ class HotelController {
 
   async allHotels(req, res, next) {
     try {
+      console.log(RedisKey.HotelSearch({ name: "sda" }));
       const { name } = req.query;
-      const { id } = req.params;
 
       if (name) {
         const hotels = await hotelService.find(
-          name.toString().replace("+", " ").trim()
+          name.toString().replace("+", " ").trim(),
+          req.query
         );
         res.json(hotels);
       } else {
