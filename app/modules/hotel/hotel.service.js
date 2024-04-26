@@ -1,8 +1,6 @@
 const autoBind = require("auto-bind");
 const HotelModel = require("./hotel.model");
-const { responseFormatter } = require("../../utils/functions");
 const RedisDB = require("../../utils/redis-connection");
-const { json } = require("express");
 const RedisKey = require("../../constant/redis.key");
 
 class RoomService {
@@ -12,29 +10,37 @@ class RoomService {
 
   async create(dto) {
     const hotel = await HotelModel.create(dto);
-    await RedisDB.del(RedisKey.Hotels);
+
+    // delete old value
     const keys = await RedisDB.keys(RedisKey.HotelSearch({ name: "*" }));
+    await RedisDB.del(RedisKey.Hotels);
     await RedisDB.del(keys);
 
     return hotel;
   }
   async getAllHotels() {
-    console.log(RedisKey.HotelSearch({ name: "" }));
-
+    // get data from redis
     const hotels = await RedisDB.get(RedisKey.Hotels);
     if (hotels) return JSON.parse(hotels);
+
+    // find hotel
     const hotel = await HotelModel.find(
       {},
       { _id: 1, name: 1, address: 1, rates: 1, price: 1, rooms: 1 }
     );
-
+    // set new value to redis
     await RedisDB.set(RedisKey.Hotels, JSON.stringify(hotel));
     return hotel;
   }
   async get(id) {
+    // get data from redis
     const redisHotelValue = await RedisDB.get(RedisKey.HotelId(id));
     if (redisHotelValue) return JSON.parse(redisHotelValue);
+
+    // find hotel by id
     const hotel = await HotelModel.findById(id).populate("rooms");
+
+    // set new value to redis
     await RedisDB.set(RedisKey.HotelId(id), JSON.stringify(hotel));
     return hotel;
   }
