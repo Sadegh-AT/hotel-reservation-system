@@ -13,7 +13,8 @@ class RoomService {
   async create(dto) {
     const hotel = await HotelModel.create(dto);
     await RedisDB.del(RedisKey.Hotels);
-    // await RedisDB.del(RedisKey.HotelSearch({ name: "" }));
+    const keys = await RedisDB.keys(RedisKey.HotelSearch({ name: "*" }));
+    await RedisDB.del(keys);
 
     return hotel;
   }
