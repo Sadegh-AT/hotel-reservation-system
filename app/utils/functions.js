@@ -36,7 +36,7 @@ function getToken(req) {
 function responseFormatter(msg, statusCode, data, req, err = true) {
   return {
     status: statusCode || 500,
-    message: msg || `Internal Server Error`,
+    message: msg || `Nessage`,
     data,
     metadata: {
       url: req.originalUrl,
