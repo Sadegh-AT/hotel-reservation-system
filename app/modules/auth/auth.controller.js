@@ -40,6 +40,9 @@ class AuthController {
   }
   async checkOTP(req, res, next) {
     try {
+      if (!validationResult(req).isEmpty()) {
+        return checkBody(req, res);
+      }
       const { mobile, code } = req.body;
       const token = await authService.checkOTP(mobile, code);
       res.cookie(CookieName.AccessToken, `Bearer ${token}`, {
