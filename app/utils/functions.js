@@ -1,6 +1,7 @@
 const createHttpError = require("http-errors");
 const moment = require("jalali-moment");
 const CookieName = require("../constant/cookie.enum");
+const { validationResult } = require("express-validator");
 
 function getDatesBetween(startDate, endDate) {
   const dates = [];
@@ -36,12 +37,13 @@ function getToken(req) {
 function responseFormatter(msg, statusCode, data, req, err = true) {
   return {
     status: statusCode || 500,
-    message: msg || `Nessage`,
+    message: msg || `Message`,
     data,
     metadata: {
       url: req.originalUrl,
       timestamp: req.receivedAt,
-      total_records: data.length,
+      total_records: data?.length,
+      invalidParams: req.invalidParams,
     },
     error: err,
   };
@@ -60,10 +62,21 @@ function objectToQueryParams(obj) {
 
   return queryParams;
 }
+function checkBody(req, res) {
+  const { validatorHandler } = require("./error-handler");
+  const error = validationResult(req);
+  if (error?.errors?.length > 0) {
+    req.invalidParams = validatorHandler(error);
+    return res.json(
+      responseFormatter("فیلد ها را درست وارد کنید", 401, null, req)
+    );
+  }
+}
 module.exports = {
   getDatesBetween,
   timeNow,
   getToken,
   responseFormatter,
   objectToQueryParams,
+  checkBody,
 };

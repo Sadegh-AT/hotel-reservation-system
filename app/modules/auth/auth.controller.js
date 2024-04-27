@@ -4,7 +4,13 @@ const AuthMessage = require("./auth.messages");
 const CookieName = require("../../constant/cookie.enum");
 const RedisDB = require("../../utils/redis-connection");
 const { StatusCodes } = require("http-status-codes");
-const { getToken, responseFormatter } = require("../../utils/functions");
+const {
+  getToken,
+  responseFormatter,
+  checkBody,
+} = require("../../utils/functions");
+const { validationResult } = require("express-validator");
+const { validatorHandler } = require("../../utils/error-handler");
 
 class AuthController {
   constructor() {
@@ -12,6 +18,10 @@ class AuthController {
   }
   async sendOTP(req, res, next) {
     try {
+      if (!validationResult(req).isEmpty()) {
+        return checkBody(req, res);
+      }
+
       const { mobile } = req.body;
       const resault = await authService.sendOTP(mobile);
 
